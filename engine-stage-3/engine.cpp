@@ -1,30 +1,31 @@
-#include <vector>
-#include <string>
 #include <algorithm>
 #include <iostream>
 #include <map>
+#include <string>
+#include <vector>
 
 #include "engine-types.h"
 
 using namespace std;
 
-static Entity createCharacter() {
-    Ability ability_health = Ability(Health, {{HpMax, 10}, {HpCurrent, 10}});
-    Ability ability_kick = Ability(Kick, {{DamageAmount, 4}});
-
-    return Entity({ {Health, ability_health}, {Kick, ability_kick} });
-}
-
-static Entity createChest() {
-    // TODO
-}
-
 int main() {
-    
-    Entity ch1 = createCharacter();
-    Entity ch2 = createCharacter();
-    
-    ch1.Apply(Kick, ch2);
-    
-    cout << ch2;
+    Entity ch1   = EntityFactory::CreateWarrior();
+    Entity ch2   = EntityFactory::CreateWarrior();
+    Entity chest = EntityFactory::CreateChest(10, 1);
+    Entity food  = EntityFactory::CreateFood();
+
+    chest.InventoryAdd({food, food});
+    cout << "chest with food:\n" << chest << endl;
+    cout << "chest size:" << chest.InventoryGetSize() << endl;
+
+    ch1.Apply(CanPick, food);
+    cout << "inventory size:" << ch1.InventoryGetSize() << endl;
+
+    ch1.Apply(CanLoot, chest);
+    cout << "inventory size:" << ch1.InventoryGetSize() << endl;
+    cout << "chest size:" << chest.InventoryGetSize() << endl;
+
+    ch1.Apply(CanKick, ch2);
+
+    cout << "ch2: \n" << ch2;
 }

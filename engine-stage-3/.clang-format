@@ -1,0 +1,11 @@
+BreakBeforeBraces: Attach
+IndentWidth: 4
+AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+AlignConsecutiveAssignments: true
+ColumnLimit: 150
+AlignConsecutiveDeclarations: true
+DerivePointerAlignment: false
+PointerAlignment: Left
+AllowShortFunctionsOnASingleLine: None
