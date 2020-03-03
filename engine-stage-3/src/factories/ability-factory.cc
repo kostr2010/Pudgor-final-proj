@@ -1,5 +1,4 @@
 #include "ability-factory.hpp"
-#include "../main-classes/main-classes.hpp"
 
 //====================
 // CONSTANTS
@@ -15,13 +14,13 @@ const int RANGE_HACK = 1;
 //====================
 // ability factory
 
-Ability AbilityFactory::CreateAbilityDie(size_t hp_max, size_t hp_current) {
+Ability AbilityFactory::CreateAbilityDie(const size_t hp_max, const size_t hp_current) {
     Ability ability_die = Ability(AbilityKind::CanDie, {{AbilityState::HpMax, hp_max}, {AbilityState::HpCurrent, hp_current}});
 
     return ability_die;
 }
 
-Ability AbilityFactory::CreateAbilityContain(size_t capacity) {
+Ability AbilityFactory::CreateAbilityContain(const size_t capacity) {
     Ability ability_contain = Ability(AbilityKind::CanContain, {{AbilityState::ContainCapacity, capacity}});
 
     return ability_contain;
@@ -33,7 +32,7 @@ Ability AbilityFactory::CreateAbilityBePicked() {
     return ability_be_picked;
 }
 
-Ability AbilityFactory::CreateAbilityMove(size_t movability) {
+Ability AbilityFactory::CreateAbilityMove(const size_t movability) {
     Ability ability_move = Ability(AbilityKind::CanMove, {{AbilityState::Movability, movability}});
 
     return ability_move;
@@ -51,25 +50,25 @@ Ability AbilityFactory::CreateAbilityLoot() {
     return ability_pick;
 }
 
-Ability AbilityFactory::CreateAbilityKick(size_t damage) {
+Ability AbilityFactory::CreateAbilityKick(const size_t damage) {
     Ability ability_kick = Ability(AbilityKind::CanKick, {{AbilityState::DamageAmount, damage}, {AbilityState::Range, RANGE_KICK}});
 
     return ability_kick;
 }
 
-Ability AbilityFactory::CreateAbilityHack(size_t hack_level) {
+Ability AbilityFactory::CreateAbilityHack(const size_t hack_level) {
     Ability ability_hack = Ability(AbilityKind::CanHack, {{AbilityState::HackLevel, hack_level}, {AbilityState::Range, RANGE_HACK}});
 
     return ability_hack;
 }
 
-Ability AbilityFactory::CreateAbilityBeLocked(size_t lock_level) {
+Ability AbilityFactory::CreateAbilityBeLocked(const size_t lock_level) {
     Ability ability_be_locked = Ability(AbilityKind::CanBeLocked, {{AbilityState::LockLevel, lock_level}});
 
     return ability_be_locked;
 }
 
-Ability AbilityFactory::CreateAbilityIsMap(size_t width, size_t height) {
+Ability AbilityFactory::CreateAbilityIsMap(const size_t width, const size_t height) {
     Ability ability_be_map = Ability(AbilityKind::IsMap, {{AbilityState::MapWidth, width}, {AbilityState::MapHeight, height}});
 
     return ability_be_map;
@@ -81,13 +80,13 @@ Ability AbilityFactory::CreateAbilityIsTransparent() {
     return ability_is_transparent;
 }
 
-Ability AbilityFactory::CreateAbilityIsWalkable(size_t walkability_level) {
+Ability AbilityFactory::CreateAbilityIsWalkable(const size_t walkability_level) {
     Ability ability_is_walkable = Ability(AbilityKind::IsWalkable, {{AbilityState::WalkabilityLevel, walkability_level}});
 
     return ability_is_walkable;
 }
 
-Ability AbilityFactory::CreateAbilityIsPositioned(int pos_x, int pos_y) {
+Ability AbilityFactory::CreateAbilityIsPositioned(const int pos_x, const int pos_y) {
     Ability ablility_is_positioned = Ability(AbilityKind::IsPositioned, {{AbilityState::PositionX, pos_x}, {AbilityState::PositionY, pos_y}});
 
     return ablility_is_positioned;

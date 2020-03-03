@@ -1,7 +1,9 @@
-#include "constants.hpp"
+#pragma once
 
-//====================
-// CONSTANTS
+#include "../main-classes/main-classes.hpp"
+#include "./enums.hpp"
+#include <functional>
+#include <map>
 
 std::map<AbilityKind, std::function<AbilityResult(Entity& origin, Entity& target)>> dict_ability_dispatcher = {
     {AbilityKind::CanDie,
@@ -30,11 +32,12 @@ std::map<AbilityKind, std::function<AbilityResult(Entity& origin, Entity& target
 
     {AbilityKind::CanPick,
      [](Entity& origin, Entity& target) -> AbilityResult {
+         bool can_reach            = origin.CheckIfInRange(target, AbilityKind::CanPick) != -1;
          bool origin_can_contain   = origin.abilities_.count(AbilityKind::CanContain) != 0;
-         bool can_reach            = origin.GetParentTile() == target.GetParentTile(); // FIXME redo trhough InReach function
          bool target_can_be_picked = target.abilities_.count(AbilityKind::CanBePicked) != 0;
          bool origin_can_fit       = origin_can_contain &&
                                origin.GetSubEntitiesCount() < origin.abilities_[AbilityKind::CanContain].GetStateValue(AbilityState::ContainCapacity);
+         // FIXME visibility check
 
          if (origin_can_contain && target_can_be_picked && origin_can_fit && can_reach) {
              origin.AddSubentity({target});
@@ -63,9 +66,10 @@ std::map<AbilityKind, std::function<AbilityResult(Entity& origin, Entity& target
          bool is_unlocked          = target_can_be_locked && origin.abilities_[AbilityKind::CanBeLocked].GetStateValue(AbilityState::LockLevel) == 0;
          int  spot_to_loot         = origin.abilities_[AbilityKind::CanLoot].GetStateValue(AbilityState::SpotToLoot);
          bool valid_index          = spot_to_loot < target.GetSubEntitiesCount() && spot_to_loot >= 0;
-         // FIXME reach check
+         bool can_reach            = origin.CheckIfInRange(target, AbilityKind::CanLoot) != -1;
+         // FIXME visibility check
 
-         if (target_can_be_looted && is_unlocked && valid_index) {
+         if (target_can_be_looted && is_unlocked && valid_index && can_reach) {
              Entity loot = *(target.GetSubentity(spot_to_loot));
 
              origin.AddSubentity({loot});
@@ -80,9 +84,10 @@ std::map<AbilityKind, std::function<AbilityResult(Entity& origin, Entity& target
     {AbilityKind::CanKick,
      [](Entity& origin, Entity& target) -> AbilityResult {
          bool target_can_die = target.abilities_.count(AbilityKind::CanDie) != 0;
-         // FIXME reach check
+         bool can_reach      = origin.CheckIfInRange(target, AbilityKind::CanKick) != -1;
+         // FIXME visibility check
 
-         if (target_can_die) {
+         if (target_can_die && can_reach) {
              Ability target_ability = target.abilities_[AbilityKind::CanDie];
 
              int damage_amount = origin.abilities_[AbilityKind::CanKick].GetStateValue(AbilityState::DamageAmount);
@@ -102,10 +107,11 @@ std::map<AbilityKind, std::function<AbilityResult(Entity& origin, Entity& target
      [](Entity& origin, Entity& target) -> AbilityResult {
          bool target_can_be_hacked = target.abilities_.count(AbilityKind::CanBeLocked) != 0;
          int  hack_level           = origin.abilities_[AbilityKind::CanHack].GetStateValue(AbilityState::HackLevel);
-         bool can_hack = target_can_be_hacked && target.abilities_[AbilityKind::CanBeLocked].GetStateValue(AbilityState::LockLevel) <= hack_level;
-         // FIXME reach check
+         bool can_hack  = target_can_be_hacked && target.abilities_[AbilityKind::CanBeLocked].GetStateValue(AbilityState::LockLevel) <= hack_level;
+         bool can_reach = origin.CheckIfInRange(target, AbilityKind::CanHack) != -1;
+         // FIXME visibility check
 
-         if (can_hack) {
+         if (can_hack & can_reach) {
              target.abilities_[AbilityKind::CanBeLocked].SetStateValue(AbilityState::LockLevel, 0);
 
              return AbilityResult::Success;

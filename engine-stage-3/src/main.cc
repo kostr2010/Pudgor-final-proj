@@ -5,12 +5,11 @@
 #include <vector>
 
 #include "factories/entity-factory.hpp"
-#include "main-classes/main-classes.hpp"
 
 // [+] coordinates -> ability "IsPositioned", only for tiles
 // [-] bool AbleToReach(source, origin, range)
 // [+] enum AbiltyResult as the dispatcher's & Apply's return value
-// [-] revise structure
+// [+] revise structure
 // [+] enum -> class enum
 // [-] test for each ability
 // [-] coverage setup
@@ -19,9 +18,36 @@
 
 using namespace std;
 
+void PrintRes(const string& ability, AbilityResult res) {
+    switch (res) {
+    case AbilityResult::Success:
+        cout << ability << " successfully applied" << endl;
+        break;
+    case AbilityResult::Undefined:
+        cout << ability << "'s result is undefined" << endl;
+        break;
+    case AbilityResult::NoDispatcher:
+        cout << ability << " has no dispatcher, not applied" << endl;
+        break;
+    case AbilityResult::ConditionsNotMet:
+        cout << ability << " wasn't applied. conditions weren't met" << endl;
+        break;
+    case AbilityResult::OriginDoesntHaveAbility:
+        cout << ability << " isn't avaliable for this entity" << endl;
+        break;
+    }
+
+    return;
+}
+
 int main() {
+    /*
     Entity world_map = EntityFactory::CreateMapShell();
     EntityFactory::InitMap(&world_map, 10, 10);
+    */
+    Entity world_map = EntityFactory::CreateMap(10, 10);
+
+    AbilityResult res = AbilityResult::Success;
 
     Entity ch1   = EntityFactory::CreateWarrior(world_map.GetSubentity(1));
     Entity ch2   = EntityFactory::CreateWarrior(world_map.GetSubentity(2));
@@ -29,17 +55,24 @@ int main() {
     Entity food  = EntityFactory::CreateFood(world_map.GetSubentity(4));
 
     chest.AddSubentity({food, food});
-    cout << "chest with food:\n" << chest << endl;
-    cout << "chest size:" << chest.GetSubEntitiesCount() << endl;
 
-    ch1.Apply(AbilityKind::CanPick, food);
-    cout << "inventory size:" << ch1.GetSubEntitiesCount() << endl;
+    res = ch1.Apply(AbilityKind::CanPick, food);
 
-    ch1.Apply(AbilityKind::CanLoot, chest);
-    printf("%s: %d\n", "inventory size", ch1.GetSubEntitiesCount());
-    printf("%s: %d\n", "chest size", chest.GetSubEntitiesCount());
+    PrintRes("CanPick", res);
 
-    ch1.Apply(AbilityKind::CanKick, ch2);
+    ch1.abilities_[AbilityKind::CanLoot].SetStateValue(AbilityState::SpotToLoot, 0);
+    res = ch1.Apply(AbilityKind::CanLoot, chest);
 
-    cout << "ch2: \n" << ch2;
+    PrintRes("CanLoot", res);
+
+    res = ch1.Apply(AbilityKind::CanKick, ch2);
+
+    PrintRes("CanKick", res);
+
+    cout << ch1 << endl;
+    cout << ch2 << endl;
+    cout << chest << endl;
+    cout << food << endl;
+
+    return 0;
 }
