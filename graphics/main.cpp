@@ -1,9 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "view.hpp"
 
 #define WIDTH 720 //horisontal size of the window
 #define HEIGHT 1280 //vertical size of the window
-#define TILE_SIZE 80
+
+
+int main(){
+	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Best Game", sf::Style::Default);
+	window.setFramerateLimit(25);
+
+	View my_view;
+	my_view.Init();
+
+	Game my_game;
+	my_view.RunGame(my_game, window);
+
+	return 0;
+}
 /*
 //window class - a convenient way to work with game window
 class Window{
@@ -221,5 +235,5 @@ int main(){
 
 	return 0;
 }
-
 */
+
