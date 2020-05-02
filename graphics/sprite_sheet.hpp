@@ -6,18 +6,34 @@
 
 //each entity type has its own sprite_sheet
 enum class EntityType{
-	Warrior,
-	Chest
+	Human,
+	Tile,
+	Chest,
+	Grass
+	//....
 };
 
-//paramaters of animaiton in sprite sheet
+//paramaters of animation in sprite sheet
 struct AnimInfo{
+	AnimInfo():
+			n_sprites(0),
+			top_left(0, 0),
+			sz(0, 0),
+			is_looped(0){
+	}
+
 	explicit AnimInfo(int p1, sf::Vector2i p2, sf::Vector2i p3, bool p4):
-			n_sprites(p1), top_left(p2),sz(p3), is_looped(p4){
+			n_sprites(p1), 
+			top_left(p2),
+			sz(p3), 
+			is_looped(p4){
 	}
 
 	explicit AnimInfo(const AnimInfo& a):
-			n_sprites(a.n_sprites), top_left(a.top_left), sz(a.sz), is_looped(a.is_looped){
+			n_sprites(a.n_sprites), 
+			top_left(a.top_left),
+			sz(a.sz), 
+			is_looped(a.is_looped){
 	}
 
 	AnimInfo& operator=(const AnimInfo& a){
@@ -29,37 +45,34 @@ struct AnimInfo{
 		return *this;
 	}
 
-	~AnimInfo(){};
+	~AnimInfo() = default;
 	
-	int n_sprites; //number of sprites in animation
-	sf::Vector2i top_left; // position of the first sprite in animation
-	sf::Vector2i sz; //size of sprite;
-	bool is_looped; //restart animation after finishing
+	int n_sprites; 			//number of sprites in animation
+	sf::Vector2i top_left; 	//position of the first sprite in animation
+	sf::Vector2i sz; 		//size of sprite (sprites are supposed to be square)
+	bool is_looped; 		//restart animation after finishing
 };
 
-enum class Dirs{ 
-	Up, 
-	Right,
-	Down,
-	Left
-};
-
+//SpriteSheet is a holder for texture. Each texture is dedicated to a particular entity type
+//The texture has all sprites for considering entity type. Each animation has a corresponding AnimInfo structure. 
+//It has some details about animation and it's position in the texture.
+//
 class SpriteSheet{
-	friend class DrawableObject;
-
 public:
-	//loads texture and info about sprites in the texture
-	explicit SpriteSheet(const std::string& file_texture, const std::string& file_info);
+	//loads texture and info about animations in the texture
+	explicit SpriteSheet(const std::string& filename_texture, const std::string& filename_info);
 
 	SpriteSheet(const SpriteSheet& ) = delete;
 	SpriteSheet& operator=(const SpriteSheet& ) = delete;
 	SpriteSheet& operator=(SpriteSheet&& s);
 
-	~SpriteSheet(){};
+	~SpriteSheet() = default;
 
 private:
 	bool ReadInfo(const std::string& file);
+	bool Load(const std::string& file);
+
 private:
-	sf::Texture texture_;//png with many animations
-	std::vector<AnimInfo> info_; //n_anim <-> info[n_anim], n_anim = 0, 1, 
+	std::unique_ptr<sf::Texture> texture_;	//png with many animations
+	std::vector<AnimInfo> info_; 			//n_anim <-> info[n_anim], n_anim = 0, 1, 2, ...
 };
