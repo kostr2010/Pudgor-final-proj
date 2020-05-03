@@ -23,7 +23,7 @@ public:
 	View(View& ) = delete;
 	View& operator=(View& ) = delete;
 	
-	~View() = default;
+	~View();
 
 	bool Init();
 	bool Finish();
@@ -36,6 +36,8 @@ public:
 	const SpriteSheet* GetSpriteSheet(enum EntityType);
 
 //	void RunGame(Game&, sf::RenderWindow&);
+private:
+	bool InitSpriteSheetBase();
 
 private:
 	std::map<int, GraphicBody*> objects_;			//[id]
@@ -54,6 +56,11 @@ public:
 	GraphicBody(const GraphicBody& o) = delete;
 	GraphicBody& operator=(const GraphicBody& o) = delete;
 
+	void SetPos(sf::Vector2f pos){ pos_ = pos;}
+	void SetDir(View::Dir dir){ dir_ = dir;}
+	void SetAnimN(int n){ anim_n_ = n;}
+	void SetIsDrawn(){ is_drawn_ = !is_drawn_;}
+
 private:
 	//pointer to associated sprite_sheet
 	SpriteSheet* sprite_sheet_;
@@ -64,7 +71,7 @@ private:
 	//orientation of sprite
 	View::Dir dir_;
 	//draw or not
-	bool to_draw_;
+	bool is_drawn_;
 	//animation number
 	int anim_n_;
 	//sprite number in animation

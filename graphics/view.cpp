@@ -77,38 +77,51 @@ void GraphicBody::SetupSprite(const sf::Vector2i& top_left) {
         sprite_.setRotation(angle);
     }
 }
+
+
+bool View::InitSpriteSheetBase(){
+
+	using two_strings = std::pair<std::string, std::string>;
+
+	std::vector<two_strings> files = 
+	{	
+		{"img/Warrior.png", "img_info/Warrior.txt"}, 
+		{"img/Chest.png", "img_info/Chest.txt"}
+	};
+
+	sprite_sheet_base_.resize(files.size());
+
+	for(int i = 0; i < files.size(); i++){
+		sprite_sheet_base_[i] = new SpriteSheet(files[i].first, files[i].second);
+		assert(sprite_sheet_base_[i]);
+	}
+}
+
+
+void View::Draw(){
+
+	GraphicBody* obj = nullptr;
+
+	for(auto& item: objects_){
+		obj = item.second;
+		assert(obj);
+
+		if(obj->is_drawn_){			
+			obj->sprite_;
+			window_.draw(obj->sprite_);
+		}
+		obj->Update();
+	}
+}
+
+
+View::~View(){
+	for(auto& item: sprite_sheet_base_){
+		delete item;
+	}
+}
+
 /*
-
-bool View::Init() {
-    InitSpriteBase(2);
-}
-
-void View::Draw(sf::RenderWindow& window) {
-    for (auto& tile : map_) {
-        tile.Draw(window);
-    }
-
-    for (auto& object : objects_) {
-        object.Draw(window);
-    }
-}
-
-void View::Update() {
-
-    for (auto& object : objects_) {
-        object.Update();
-    }
-}
-
-// creating filename with macros?
-bool View::InitSpriteBase(int n_sheets) {
-    std::vector<SpriteSheet>& base = DrawableObject::sprite_sheet_base;
-    base.resize(n_sheets);
-
-    base[static_cast<int>(EntityType::Warrior)] = SpriteSheet("img/Warrior.png", "img_info/Warrior.txt");
-    // and so on
-}
-
 void View::RunGame(Game& game, sf::RenderWindow& window) {
     game.Init();
 
