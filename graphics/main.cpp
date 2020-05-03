@@ -1,13 +1,28 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "view.hpp"
+#include "sprite_sheet.hpp"
+#include <cassert>
 
-#define WIDTH 720 //horisontal size of the window
-#define HEIGHT 1280 //vertical size of the window
-
+ #include <chrono>
+ #include <thread>
 
 int main(){
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Best Game", sf::Style::Default);
+
+	View my_view;
+
+	GraphicBody b(0, {250, 250});
+	my_view.AddObject(1, b, Rock);
+
+
+	for(auto i = 1; i < 30; i++){
+		my_view.BeginDraw();	
+		my_view.Draw();
+		my_view.EndDraw();
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
+
+/*	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Best Game", sf::Style::Default);
 	window.setFramerateLimit(25);
 
 	View my_view;
@@ -15,7 +30,11 @@ int main(){
 
 	Game my_game;
 	my_view.RunGame(my_game, window);
+*/	
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+	std::cout << "ok!\n";
 	return 0;
 }
 /*

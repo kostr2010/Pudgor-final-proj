@@ -5,7 +5,8 @@
 #include <vector>
 
 //each entity type has its own sprite_sheet
-enum class EntityType{
+enum EntityType{
+	Rock = 0,
 	Human,
 	Tile,
 	Chest,

@@ -8,11 +8,11 @@
 //loads texture and info about sprites in the texture
 SpriteSheet::SpriteSheet(const std::string& file_texture, const std::string& file_info){	
 	//add exceptions 
-	if(ReadInfo(file_info) == false){
+	if(!ReadInfo(file_info)){
 		assert(!"Reading anim info error\n");
 	}
 
-	if(Load(file_texture) == 0){
+	if(!Load(file_texture)){
 		assert(!"Loading texture error\n");
 	}
 }
@@ -22,7 +22,7 @@ bool SpriteSheet::Load(const std::string& filename){
 	
 	std::unique_ptr<sf::Texture> my_texture(new sf::Texture()); 
 
-	if(my_texture->loadFromFile(filename)){
+	if(!my_texture->loadFromFile(filename)){
 		return false;
 	}
 	texture_ = std::move(my_texture);
@@ -44,6 +44,7 @@ bool SpriteSheet::ReadInfo(const std::string& file){
 	std::ifstream input(file);
 
 	if(!input.is_open()){
+		assert(!"file");
 		return false;
 	}
 
@@ -64,7 +65,6 @@ bool SpriteSheet::ReadInfo(const std::string& file){
 		input >> info.sz.x >> info.sz.y;
 
 		input >> info.is_looped;
-
 	}
 
 	return true;

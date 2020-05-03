@@ -6,6 +6,12 @@
 #include "view.hpp"
 #include "sprite_sheet.hpp"
 
+View::View(){
+	InitSpriteSheetBase();
+	WindowCreate();
+}
+
+
 void View::AddObject(int id, GraphicBody& obj, enum EntityType t){
 	
 	obj.sprite_sheet_ = sprite_sheet_base_[static_cast<int>(t)];
@@ -25,8 +31,8 @@ bool View::InitSpriteSheetBase(){
 
 	std::vector<two_strings> files = 
 	{	
-		{"img/Warrior.png", "img_info/Warrior.txt"}, 
-		{"img/Chest.png", "img_info/Chest.txt"}
+//		{"img/Warrior.png", "img_info/Warrior.txt"}, 
+		{"./img/Rock.png", "./img_info/Rock.txt"}
 	};
 
 	sprite_sheet_base_.resize(files.size());
@@ -41,16 +47,15 @@ bool View::InitSpriteSheetBase(){
 
 
 void View::Draw(){
-
 	GraphicBody* obj = nullptr;
 
 	for(auto& item: objects_){
 		obj = item.second;
 		assert(obj);
 
-		if(obj->is_drawn_)			
+		if(obj->is_drawn_){		
 			window_->draw(obj->sprite_);
-		
+		}
 		obj->Update();
 	}
 }
@@ -92,6 +97,7 @@ View::~View(){
 		delete item;
 	}
 
+	window_->close();
 	delete window_;
 }
 

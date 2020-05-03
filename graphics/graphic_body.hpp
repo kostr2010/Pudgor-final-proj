@@ -15,8 +15,7 @@ public:
 		LEFT
 	};
 
-	GraphicBody(const enum EntityType t, const int n_anim, 
-				const sf::Vector2f pos, const Dir dir = Dir::UP);
+	GraphicBody(const int n_anim, const sf::Vector2f pos, const Dir dir = Dir::UP);
 
 	GraphicBody(const GraphicBody& o) = delete;
 	GraphicBody& operator=(const GraphicBody& o) = delete;

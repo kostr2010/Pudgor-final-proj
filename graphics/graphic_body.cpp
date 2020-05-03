@@ -4,14 +4,13 @@
 #include "graphic_body.hpp"
 #include "view.hpp"
 
-GraphicBody::GraphicBody(const enum EntityType t, const int anim_n,
-						 const sf::Vector2f pos, const Dir dir /*= View::Dir::UP*/):
+GraphicBody::GraphicBody(const int anim_n, const sf::Vector2f pos, const Dir dir /*= View::Dir::UP*/):
 		sprite_sheet_(nullptr),
 		sprite_(),
 		pos_(pos),
 		dir_(dir),
 		anim_n_(anim_n),
-		sprite_n_(0){	
+		sprite_n_(1000){	
 }
 
 
