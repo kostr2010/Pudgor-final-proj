@@ -1,125 +1,131 @@
-#include <vector>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <vector>
+#include <cassert>
 
+//#include "control.hpp"
 #include "view.hpp"
-#include "control.hpp"
 
-/************Drawable Object***********/
-
-//by default all sprites are oriented upwardly
-//(x,y) - sprite position, n_sprite_sheet - sheet number in base
-//n_anim - animation number in set
-DrawableObject::DrawableObject(	const int n_sprite_sheet, const int n_anim, 
-                    			const sf::Vector2f pos, const Dirs dir /*= Dirs::Up*/):
-
-		sprite_(sprite_sheet_base[n_sprite_sheet].texture_), //connecting with texture
+GraphicBody::GraphicBody(const enum EntityType t, const int anim_n, 
+						 const sf::Vector2f pos, const View::Dir dir /*= View::Dir::UP*/):
+		sprite_sheet_(nullptr),
+		sprite_(),
 		pos_(pos),
-		sprite_sheet_(sprite_sheet_base[n_sprite_sheet]),
-		n_anim_(n_anim),
-		n_frame_(0),
-		dir_(dir){
-	
-	
-	SetupSprite(sprite_sheet_.info_[n_anim_].top_left);
+		dir_(dir),
+		anim_n_(anim_n),
+		sprite_n_(0){	
 }
 
-void DrawableObject::Draw(sf::RenderWindow&  window){
 
-	window.draw(sprite_);
-}
-
-void DrawableObject::Update(){
-	//all sprites which belong to the same animation must be in one row
-	const std::vector<AnimInfo>& v_info = sprite_sheet_.info_;
-
-	//n_anim_ = 0 - idle animation
-	if(++n_frame_ >= v_info[n_anim_].n_sprites){			
-		n_frame_ = 0;
-		n_anim_ = v_info[n_anim_].is_looped ? n_anim_ : 0;
-	}
-
-	int new_x = v_info[n_anim_].top_left.x + n_frame_ * v_info[n_anim_].sz.x;
-	int new_y = pos_.y;
-
-	SetupSprite({new_x, new_y});
-}
-
-//cuts sprite from texture using top_left_x and top_left_y, 
-//sets its position to x_, y_, rotates if necessary 
-bool DrawableObject::SetupSprite(const sf::Vector2i& top_left){
-
-	const AnimInfo& info = sprite_sheet_.info_[n_anim_];
-
-	sprite_.setTextureRect(sf::IntRect(top_left.x, top_left.y, info.sz.x, info.sz.y));
+void View::AddObject(int id, GraphicBody& obj, enum EntityType t){
 	
-	sprite_.setOrigin(info.sz.x / 2, info.sz.y / 2);
+	obj.sprite_sheet_ = sprite_sheet_base_[static_cast<int>(t)];
+	assert(obj.sprite_sheet_);
 
-	sprite_.setPosition(pos_);
+	obj.sprite_.setTexture(obj.sprite_sheet_->GetTexture());
 
-	if(dir_ != Dirs::Up){
-			float angle = 0.0;
+	obj.Update();
 
-			switch(dir_){
-				case Dirs::Right:
-					angle = 90.0;
-					break;
-				case Dirs::Down:
-					angle = 180.0;
-					break;
-				case Dirs::Left:
-					angle = 270.0;
-					break;
-			}
-			sprite_.setRotation(angle);
+	objects_[id] = &obj;
+}
+
+
+void GraphicBody::Update() {
+
+	assert(sprite_sheet_);
+    // all sprites which belong to the same animation must be in one row
+	const AnimInfo* info = sprite_sheet_->GetInfo(anim_n_);
+
+    // anim_n_ = 0 - idle animation
+    if (++sprite_n_ >= info->n_sprites) {
+        sprite_n_ = 0;
+
+		if(!info->is_looped){
+        	anim_n_  = 0;
+			info = sprite_sheet_->GetInfo(0);
 		}
-
-	return true;
+    }
+	//coordinates of new_sprite in the texture
+    int new_x = info->top_left.x + sprite_n_ * info->sz.x;
+    int new_y = info->top_left.y;
+	//cut new sprite from texture
+    SetupSprite({new_x, new_y});
 }
 
-/*********** View **********/
-bool View::Init(){
-	InitSpriteBase(2);
+// cuts sprite from texture using top_left_x and top_left_y,
+// sets its position to pos_, rotates if necessary
+void GraphicBody::SetupSprite(const sf::Vector2i& top_left) {
+
+	assert(sprite_sheet_);
+    const AnimInfo* info = sprite_sheet_->GetInfo(anim_n_);
+
+	//cut sprite at <top_left> with size <info->size>
+    sprite_.setTextureRect(sf::IntRect(top_left, info->sz));
+	//sets the center
+    sprite_.setOrigin(info->sz.x / 2, info->sz.y / 2);
+	//sets position
+    sprite_.setPosition(pos_);
+	//sets the orientation
+    if (dir_ != View::Dir::UP) {
+
+        float angle = 0.0;
+        switch(dir_) {
+        	case View::Dir::RIGHT: angle = 90.0;  break;
+        	case View::Dir::DOWN:  angle = 180.0; break;
+        	case View::Dir::LEFT:  angle = 270.0; break;
+        }
+        sprite_.setRotation(angle);
+    }
+}
+/*
+
+bool View::Init() {
+    InitSpriteBase(2);
 }
 
-void View::Draw(sf::RenderWindow& window){	
-	for(auto& tile: map_){
-		tile.Draw(window);
-	}
+void View::Draw(sf::RenderWindow& window) {
+    for (auto& tile : map_) {
+        tile.Draw(window);
+    }
 
-	for(auto& object: objects_){
-		object.Draw(window);
-	}
+    for (auto& object : objects_) {
+        object.Draw(window);
+    }
 }
 
-void View::Update(){
+void View::Update() {
 
-	for(auto& object: objects_){
-		object.Update();
-	}
+    for (auto& object : objects_) {
+        object.Update();
+    }
 }
 
-//creating filename with macros?
-bool View::InitSpriteBase(int n_sheets){
-	std::vector<SpriteSheet>& base = DrawableObject::sprite_sheet_base;
-	base.resize(n_sheets);
+// creating filename with macros?
+bool View::InitSpriteBase(int n_sheets) {
+    std::vector<SpriteSheet>& base = DrawableObject::sprite_sheet_base;
+    base.resize(n_sheets);
 
-	base[static_cast<int>(EntityType::Warrior)] = 
-		SpriteSheet("img/Warrior.png", "img_info/Warrior.txt");
-	//and so on
+    base[static_cast<int>(EntityType::Warrior)] = SpriteSheet("img/Warrior.png", "img_info/Warrior.txt");
+    // and so on
 }
 
-void View::RunGame(Game& game, sf::RenderWindow& window){
-	game.Init();
+void View::RunGame(Game& game, sf::RenderWindow& window) {
+    game.Init();
 
-	while(window.isOpen()){
-		Control::Input(game, window);
+    while (window.isOpen()) {
+        Control::Input(game, window);
 
-		window.clear();	
-		Draw(window);
-		window.display();
-	}
+        window.clear();
+        Draw(window);
+        window.display();
+
+        Update();
+    }
 }
+*/
 
-
-
+/*
+int main(){
+	std::cout << "Ok!\n";
+}
+*/

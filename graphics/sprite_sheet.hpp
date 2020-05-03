@@ -67,6 +67,8 @@ public:
 	SpriteSheet& operator=(SpriteSheet&& s);
 
 	~SpriteSheet() = default;
+	const AnimInfo* GetInfo(int n);
+	const sf::Texture& GetTexture() const{ return *texture_;}
 
 private:
 	bool ReadInfo(const std::string& file);

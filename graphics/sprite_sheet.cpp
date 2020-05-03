@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <fstream>
 #include <iostream>
+#include <cassert>
 
 #include "sprite_sheet.hpp"
 
@@ -8,11 +9,11 @@
 SpriteSheet::SpriteSheet(const std::string& file_texture, const std::string& file_info){	
 	//add exceptions 
 	if(ReadInfo(file_info) == false){
-		printf("Reading anim info error\n");
+		assert(!"Reading anim info error\n");
 	}
 
 	if(Load(file_texture) == 0){
-		printf("Loading texture error\n");
+		assert(!"Loading texture error\n");
 	}
 }
 
@@ -78,9 +79,16 @@ SpriteSheet& SpriteSheet::operator=(SpriteSheet&& s){
 	return *this;
 }
 
+
+const AnimInfo* SpriteSheet::GetInfo(int n){
+	
+	assert(n >= 0);
+	return &info_[n];
+}
+
 /*
 int main(){
 	std::cout << "Ok!\n";
 }
-
+*/
 //g++ -o test sprite_sheet.cpp -Wall -lsfml-graphics -lsfml-window -lsfml-system
