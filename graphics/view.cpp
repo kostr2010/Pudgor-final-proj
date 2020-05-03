@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include "view.hpp"
+#include "sprite_sheet.hpp"
 
 void View::AddObject(int id, GraphicBody& obj, enum EntityType t){
 	
@@ -48,17 +49,50 @@ void View::Draw(){
 		assert(obj);
 
 		if(obj->is_drawn_)			
-			window_.draw(obj->sprite_);
+			window_->draw(obj->sprite_);
 		
 		obj->Update();
 	}
 }
 
 
+bool View::WindowCreate(){
+
+	window_ = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT), "Best Game", sf::Style::Default);
+	assert(window_);
+	return true;
+}
+
+
+void View::SetWindowTitle(const std::string new_title){
+
+	window_->setTitle(new_title);
+}
+
+
+void View::BeginDraw(){
+
+	window_->clear();
+}
+
+
+void View::EndDraw(){
+
+	window_->display();
+}
+
+
+sf::RenderWindow& View::GetWindow(){
+
+	return *window_;
+}
+
 View::~View(){
 	for(auto& item: sprite_sheet_base_){
 		delete item;
 	}
+
+	delete window_;
 }
 
 /*
@@ -74,11 +108,5 @@ void View::RunGame(Game& game, sf::RenderWindow& window) {
 
         Update();
     }
-}
-*/
-
-/*
-int main(){
-	std::cout << "Ok!\n";
 }
 */

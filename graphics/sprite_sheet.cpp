@@ -85,10 +85,3 @@ const AnimInfo* SpriteSheet::GetInfo(int n){
 	assert(n >= 0);
 	return &info_[n];
 }
-
-/*
-int main(){
-	std::cout << "Ok!\n";
-}
-*/
-//g++ -o test sprite_sheet.cpp -Wall -lsfml-graphics -lsfml-window -lsfml-system
