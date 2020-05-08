@@ -47,8 +47,6 @@ int main() {
   ComponentContainer ch1_inventory   = {};
   ComponentContainer chest_inventory = {{item}};
 
-  monitor.AttachProperty(item, Pickable);
-
   monitor.AttachComponent(chest_inventory, chest);
   monitor.AttachComponent(ch1_inventory, ch1);
 

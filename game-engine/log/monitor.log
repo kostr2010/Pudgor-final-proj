@@ -1,65 +1,12 @@
 [Monitor] ComponentManager initialized
 [Monitor] EntityManager initialized
 [Monitor] SystemManager initialized
-[Monitor] component 18SCPComponentHealth registered with id 0
-[Monitor] new system 15SCPSystemHealth registered
-[Monitor] component 20SCPComponentPosition registered with id 1
-[Monitor] component 20SCPComponentMovement registered with id 2
-[Monitor] new system 17SCPSystemMovement registered
-[Monitor] component 17SCPComponentHuman registered with id 3
-[Monitor] new system 14SCPSystemHuman registered
-[Monitor] component 18SCPComponentEuclid registered with id 4
-[Monitor] new system 15SCPSystemEuclid registered
-[Monitor] component 18SCPComponentVisual registered with id 5
-[Monitor] new system 15SCPSystemVisual registered
+[Monitor] component 18ComponentContainer registered with id 0
+[Monitor] new system 15SystemContainer registered
 [Monitor] new entity with id 0 registered
-[Monitor] entity's 0 signature updated. now it's signature is 00000000000000000000000000000010
-[Monitor] component 20SCPComponentPosition aka 1 attached to entity 0. now it's signature is 00000000000000000000000000000010
-[Monitor] entity's 0 signature updated. now it's signature is 00000000000000000000000000010010
-[Monitor] component 18SCPComponentEuclid aka 4 attached to entity 0. now it's signature is 00000000000000000000000000010010
-[Monitor] entity's 0 signature updated. now it's signature is 00000000000000000000000000010110
-[Monitor] component 20SCPComponentMovement aka 2 attached to entity 0. now it's signature is 00000000000000000000000000010110
-[Monitor] entity's 0 signature updated. now it's signature is 00000000000000000000000000010111
-[Monitor] component 18SCPComponentHealth aka 0 attached to entity 0. now it's signature is 00000000000000000000000000010111
-[Monitor] entity's 0 signature updated. now it's signature is 00000000000000000000000000110111
-[Monitor] component 18SCPComponentVisual aka 5 attached to entity 0. now it's signature is 00000000000000000000000000110111
-[Monitor] scp173 spawned as 0 at {0, 0}
 [Monitor] new entity with id 1 registered
-[Monitor] entity's 1 signature updated. now it's signature is 00000000000000000000000000000010
-[Monitor] component 20SCPComponentPosition aka 1 attached to entity 1. now it's signature is 00000000000000000000000000000010
-[Monitor] entity's 1 signature updated. now it's signature is 00000000000000000000000000000011
-[Monitor] component 18SCPComponentHealth aka 0 attached to entity 1. now it's signature is 00000000000000000000000000000011
-[Monitor] entity's 1 signature updated. now it's signature is 00000000000000000000000000000111
-[Monitor] component 20SCPComponentMovement aka 2 attached to entity 1. now it's signature is 00000000000000000000000000000111
-[Monitor] entity's 1 signature updated. now it's signature is 00000000000000000000000000001111
-[Monitor] component 17SCPComponentHuman aka 3 attached to entity 1. now it's signature is 00000000000000000000000000001111
-[Monitor] entity's 1 signature updated. now it's signature is 00000000000000000000000000101111
-[Monitor] component 18SCPComponentVisual aka 5 attached to entity 1. now it's signature is 00000000000000000000000000101111
-[Monitor] human spawned as 1 at {5, 5}
 [Monitor] new entity with id 2 registered
-[Monitor] entity's 2 signature updated. now it's signature is 00000000000000000000000000000010
-[Monitor] component 20SCPComponentPosition aka 1 attached to entity 2. now it's signature is 00000000000000000000000000000010
-[Monitor] entity's 2 signature updated. now it's signature is 00000000000000000000000000000011
-[Monitor] component 18SCPComponentHealth aka 0 attached to entity 2. now it's signature is 00000000000000000000000000000011
-[Monitor] entity's 2 signature updated. now it's signature is 00000000000000000000000000000111
-[Monitor] component 20SCPComponentMovement aka 2 attached to entity 2. now it's signature is 00000000000000000000000000000111
-[Monitor] entity's 2 signature updated. now it's signature is 00000000000000000000000000001111
-[Monitor] component 17SCPComponentHuman aka 3 attached to entity 2. now it's signature is 00000000000000000000000000001111
-[Monitor] entity's 2 signature updated. now it's signature is 00000000000000000000000000101111
-[Monitor] component 18SCPComponentVisual aka 5 attached to entity 2. now it's signature is 00000000000000000000000000101111
-[Monitor] human spawned as 2 at {7, 1}
-[Monitor] new entity with id 3 registered
-[Monitor] entity's 3 signature updated. now it's signature is 00000000000000000000000000000010
-[Monitor] component 20SCPComponentPosition aka 1 attached to entity 3. now it's signature is 00000000000000000000000000000010
-[Monitor] entity's 3 signature updated. now it's signature is 00000000000000000000000000000011
-[Monitor] component 18SCPComponentHealth aka 0 attached to entity 3. now it's signature is 00000000000000000000000000000011
-[Monitor] entity's 3 signature updated. now it's signature is 00000000000000000000000000000111
-[Monitor] component 20SCPComponentMovement aka 2 attached to entity 3. now it's signature is 00000000000000000000000000000111
-[Monitor] entity's 3 signature updated. now it's signature is 00000000000000000000000000001111
-[Monitor] component 17SCPComponentHuman aka 3 attached to entity 3. now it's signature is 00000000000000000000000000001111
-[Monitor] entity's 3 signature updated. now it's signature is 00000000000000000000000000101111
-[Monitor] component 18SCPComponentVisual aka 5 attached to entity 3. now it's signature is 00000000000000000000000000101111
-[Monitor] human spawned as 3 at {9, 9}
-[Monitor] entity 1deleted from all managers
-[Monitor] entity 2deleted from all managers
-[Monitor] entity 3deleted from all managers
+[Monitor] entity's 1 signature updated. now it's signature is 00000000000000000000000000000001
+[Monitor] component 18ComponentContainer aka 0 attached to entity 1. now it's signature is 00000000000000000000000000000001
+[Monitor] entity's 0 signature updated. now it's signature is 00000000000000000000000000000001
+[Monitor] component 18ComponentContainer aka 0 attached to entity 0. now it's signature is 00000000000000000000000000000001

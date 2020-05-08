@@ -2,6 +2,7 @@
 
 #include <map>
 #include <set>
+#include <string>
 #include <typeinfo>
 
 #include "../entity/entity.hpp"
@@ -28,7 +29,7 @@ public:
 
   template <typename System_t>
   System_t* RegisterSystem() {
-    const char* type_name = typeid(System_t).name();
+    std::string type_name(typeid(System_t).name());
 
     System_t* system = new System_t{monitor_};
 
@@ -43,7 +44,7 @@ public:
 
   template <typename System_t>
   System_t* GetSystem() {
-    const char* type_name = typeid(System_t).name();
+    std::string type_name(typeid(System_t).name());
 
     // TODO: assert that the system exists
 
@@ -52,9 +53,9 @@ public:
 
   template <typename System_t>
   void SetSignature(Signature signature) {
-    const char* typeName = typeid(System_t).name();
+    std::string type_name(typeid(System_t).name());
 
-    system_signatures_.insert({typeName, signature});
+    system_signatures_.insert({type_name, signature});
 
     // TODO add try/catch here
     // LOG_LVL_SYSTEM_ROUTINE(SystemManager, "SystemManager initialised");
@@ -109,7 +110,7 @@ public:
 
   template <typename System_t>
   bool Contains() const {
-    const char* id = typeid(System_t).name();
+    std::string id(typeid(System_t).name());
 
     return systems_.find(id) != systems_.end();
   }
@@ -119,8 +120,8 @@ public:
   };
   // private: ?????????
   Monitor*                       monitor_;
-  std::map<const char*, System*> systems_{};
-  std::map<const char*, Signature>
+  std::map<std::string, System*> systems_{};
+  std::map<std::string, Signature>
       system_signatures_{}; // !!!! system_signature_ & entity_signature == system_signature in
                             // order to check if entity has all components needed for this system,
                             // else abort

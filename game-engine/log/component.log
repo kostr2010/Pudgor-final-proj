@@ -1,29 +1,3 @@
-[16ComponentManager] component 18SCPComponentHealth registered as 0
-[16ComponentManager] component 20SCPComponentPosition registered as 1
-[16ComponentManager] component 20SCPComponentMovement registered as 2
-[16ComponentManager] component 17SCPComponentHuman registered as 3
-[16ComponentManager] component 18SCPComponentEuclid registered as 4
-[16ComponentManager] component 18SCPComponentVisual registered as 5
-[16ComponentManager] component 20SCPComponentPosition(x: 0, y: 0) attached to entity 0
-[16ComponentManager] component 18SCPComponentEuclid(damage: 10) attached to entity 0
-[16ComponentManager] component 20SCPComponentMovement(speed 5) attached to entity 0
-[16ComponentManager] component 18SCPComponentHealth(hp 10) attached to entity 0
-[16ComponentManager] component 18SCPComponentVisual(sprite S) attached to entity 0
-[16ComponentManager] component 20SCPComponentPosition(x: 5, y: 5) attached to entity 1
-[16ComponentManager] component 18SCPComponentHealth(hp 5) attached to entity 1
-[16ComponentManager] component 20SCPComponentMovement(speed 1) attached to entity 1
-[16ComponentManager] component 17SCPComponentHuman(is human) attached to entity 1
-[16ComponentManager] component 18SCPComponentVisual(sprite H) attached to entity 1
-[16ComponentManager] component 20SCPComponentPosition(x: 7, y: 1) attached to entity 2
-[16ComponentManager] component 18SCPComponentHealth(hp 5) attached to entity 2
-[16ComponentManager] component 20SCPComponentMovement(speed 1) attached to entity 2
-[16ComponentManager] component 17SCPComponentHuman(is human) attached to entity 2
-[16ComponentManager] component 18SCPComponentVisual(sprite H) attached to entity 2
-[16ComponentManager] component 20SCPComponentPosition(x: 9, y: 9) attached to entity 3
-[16ComponentManager] component 18SCPComponentHealth(hp 5) attached to entity 3
-[16ComponentManager] component 20SCPComponentMovement(speed 1) attached to entity 3
-[16ComponentManager] component 17SCPComponentHuman(is human) attached to entity 3
-[16ComponentManager] component 18SCPComponentVisual(sprite H) attached to entity 3
-[16ComponentManager] entity 1 removed from all components
-[16ComponentManager] entity 2 removed from all components
-[16ComponentManager] entity 3 removed from all components
+[16ComponentManager] component 18ComponentContainer registered as 0
+[16ComponentManager] component 18ComponentContainer(subentities: 2 ) attached to entity 1
+[16ComponentManager] component 18ComponentContainer(subentities: ) attached to entity 0

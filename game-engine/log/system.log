@@ -1,29 +1,4 @@
 [13SystemManager ] SystemManager initialised
-[13SystemManager ] new system 15SCPSystemHealth registered
-[13SystemManager ] new system 17SCPSystemMovement registered
-[13SystemManager ] new system 15SCPSystemEuclid registered
-[13SystemManager ] new system 14SCPSystemHuman registered
-[13SystemManager ] new system 15SCPSystemVisual registered
-[13SystemManager ] updated entity's 0 signature in every system
-[13SystemManager ] updated entity's 0 signature in every system
-[13SystemManager ] updated entity's 0 signature in every system
-[13SystemManager ] updated entity's 0 signature in every system
-[13SystemManager ] updated entity's 0 signature in every system
+[13SystemManager ] new system 15SystemContainer registered
 [13SystemManager ] updated entity's 1 signature in every system
-[13SystemManager ] updated entity's 1 signature in every system
-[13SystemManager ] updated entity's 1 signature in every system
-[13SystemManager ] updated entity's 1 signature in every system
-[13SystemManager ] updated entity's 1 signature in every system
-[13SystemManager ] updated entity's 2 signature in every system
-[13SystemManager ] updated entity's 2 signature in every system
-[13SystemManager ] updated entity's 2 signature in every system
-[13SystemManager ] updated entity's 2 signature in every system
-[13SystemManager ] updated entity's 2 signature in every system
-[13SystemManager ] updated entity's 3 signature in every system
-[13SystemManager ] updated entity's 3 signature in every system
-[13SystemManager ] updated entity's 3 signature in every system
-[13SystemManager ] updated entity's 3 signature in every system
-[13SystemManager ] updated entity's 3 signature in every system
-[13SystemManager ] removed entity 1
-[13SystemManager ] removed entity 2
-[13SystemManager ] removed entity 3
+[13SystemManager ] updated entity's 0 signature in every system

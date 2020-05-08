@@ -45,4 +45,7 @@ public:
   std::vector<ComponentType> GetRequiredComponentTypes() override {
     return {monitor_->RegisterComponent<ComponentHealth>()};
   }
+
+  void RegisterDependentSystems() override {
+  }
 };

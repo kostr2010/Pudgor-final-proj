@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "../../component/components/container.hpp"
-#include "../../property/properties.hpp"
 #include "../system.hpp"
 
 class SystemContainer : public System {
@@ -14,8 +13,6 @@ public:
 
   ResponseCode Pick(EntityId entity_origin, EntityId entity_target) {
     // TODO remove position component from target
-
-    REQUIRE_PROPERTY(SystemContainer, Pickable, entity_target);
 
     ComponentContainer* origin_comp_contain =
         monitor_->GetComponent<ComponentContainer>(entity_origin);
@@ -27,9 +24,6 @@ public:
 
   ResponseCode Drop(EntityId entity_origin, EntityId entity_target) {
     // TODO add position component to target
-
-    REQUIRE_COMPONENT(SystemContainer, ComponentContainer, entity_origin);
-    REQUIRE_PROPERTY(SystemContainer, Pickable, entity_target);
 
     ComponentContainer* origin_comp_contain =
         monitor_->GetComponent<ComponentContainer>(entity_origin);
@@ -60,5 +54,8 @@ public:
 
   std::vector<ComponentType> GetRequiredComponentTypes() override {
     return {monitor_->RegisterComponent<ComponentContainer>()};
+  }
+
+  void RegisterDependentSystems() override {
   }
 };

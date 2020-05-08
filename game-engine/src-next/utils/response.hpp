@@ -13,9 +13,3 @@ enum class ResponseCode {
     LOG_LVL_SYSTEM_FAILURE(system, entity << " has no component " << typeid(component).name());    \
     return ResponseCode::Failure;                                                                  \
   }
-
-#define REQUIRE_PROPERTY(system, property, entity)                                                 \
-  if (monitor_->HasNoProperty(entity, property)) {                                                 \
-    LOG_LVL_SYSTEM_FAILURE(system, entity << " has property " << property);                        \
-    return ResponseCode::Failure;                                                                  \
-  }

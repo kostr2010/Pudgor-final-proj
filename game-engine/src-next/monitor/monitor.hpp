@@ -5,10 +5,6 @@
 
 #include "../component/component.hpp"
 #include "../entity/entity.hpp"
-#include "../map/map.hpp"
-
-#include "../property/properties.hpp"
-#include "../property/property.hpp"
 
 #include "../system/system.hpp"
 #include "../system/systemManager.hpp"
@@ -172,57 +168,9 @@ public:
     return component_manager_.GetComponent<Component_t>(entity);
   }
 
-  void AttachProperty(EntityId entity, PropertyType property) {
-    property_manager_.AttachProperty(entity, property);
-  }
-
-  void RemoveProperty(EntityId entity, PropertyType property) {
-    property_manager_.RemoveProperty(entity, property);
-  }
-
-  bool HasProperty(EntityId entity, PropertyType property) {
-    return property_manager_.HasProperty(entity, property);
-  }
-
-  bool HasNoProperty(EntityId entity, PropertyType property) {
-    return property_manager_.HasNoProperty(entity, property);
-  }
-
   bool CheckIfEntityExists(EntityId entity) {
     return entity_manager_.CheckIfEntityExists(entity);
   }
-
-  // EntityId GetTile(Vec2 pos) {
-  //   SystemTerrain* sys_terrain = GetSystem<SystemTerrain>();
-
-  //   for (const auto& entity : sys_terrain->entities_) {
-  //     ComponentPosition* comp_pos = GetComponent<ComponentPosition>(entity);
-  //     if (comp_pos->pos == pos)
-  //       return entity;
-  //   }
-
-  //   assertm(false, "pos for the tile is out of range");
-  // }
-
-  // Terrain CellGetTerrain(Vec2 pos) {
-  //   return map_->GetTerrain(pos);
-  // }
-
-  // bool CellContainsEntity(Vec2 pos, EntityId entity) {
-  //   return map_->ContainsEntity(pos, entity);
-  // }
-
-  // void CellRemoveEntity(Vec2 pos, EntityId entity) {
-  //   map_->RemoveEntity(pos, entity);
-  // }
-
-  // void CellAddEntity(Vec2 pos, EntityId entity) {
-  //   map_->AddEntity(pos, entity);
-  // }
-
-  // bool CellIsWalkable(Vec2 pos) {
-  //   return map_->IsWalkable(pos);
-  // }
 
 private:
   void UpdateSignature(EntityId entity, Signature& signature) {
@@ -236,9 +184,6 @@ private:
     LOG_LVL_MONITOR_ROUTINE("entity's " << entity << " signature updated. now it's signature is "
                                         << signature);
   }
-
-  // Map*             map_{};
-  PropertyManager  property_manager_{};
   ComponentManager component_manager_{};
   EntityManager    entity_manager_{};
   SystemManager    system_manager_{this};

@@ -7,6 +7,7 @@
 #include <list>
 #include <map>
 // #include <memory>
+#include <string>
 #include <typeinfo>
 
 #include "../entity/entity.hpp"
@@ -202,14 +203,14 @@ public:
   }
 
 private:
-  std::map<const char*, ComponentType>   component_types_{};
-  std::map<const char*, IComponentPack*> component_packs_{};
+  std::map<std::string, ComponentType>   component_types_{};
+  std::map<std::string, IComponentPack*> component_packs_{};
 
   ComponentType next_{};
 
   template <typename Component_t>
-  inline const char* GetComponentId() {
-    return typeid(Component_t).name();
+  inline std::string GetComponentId() {
+    return std::string(typeid(Component_t).name());
   }
 
   template <typename Component_t>
