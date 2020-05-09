@@ -268,7 +268,7 @@ public:
 };
 ```
 
-When new System is registered, it's name is taken (from template via typeid) as id and then this System is stored in `systems_` map. Next, we set System's signature. It works same as with entity and its signature. In order to check if entity meets requirements, we need to do bitewise AND upon both entity's and System's signatures. And if `system_signature_ & entity_signature == system_signature`, then entity meets System's requirements. When System's sugnature is set/changed, SystemManager iterates upon every entity and checks if they meet new System's signature. Same goes when entity's signature changes (f.ex, our gopher becomes immortal, thus losing ComponentHealth): SystemManager goes through all Systems and checks if new signature meets any of them (or stopped to meet).
+When a new System is registered, it's name is taken (from template via typeid) as id and then this System is stored in `systems_` map. Next, we set System's signature. It works same way as with entity and its signature. In order to check if entity meets requirements, we need to do bitewise AND upon both entity's and System's signatures. And if `system_signature_ & entity_signature == system_signature`, then entity meets System's requirements. When System's sugnature is set/changed, SystemManager iterates upon every entity and checks if they meet new System's signature. Same goes when entity's signature changes (f.ex, our gopher becomes immortal, thus losing ComponentHealth): SystemManager goes through all Systems and checks if new signature meets any of them (or stopped to meet).
 
 Let's write some examples:
 
