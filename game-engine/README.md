@@ -229,7 +229,7 @@ protected:
 };
 ```
 
-`entities_` set holds all entities that meet System's requirements. GetRequiredComponentTypes returns id's of components that are needed for entity to have functionality System provides. RegisterDependentSystems registers all Systems that are used inside this System (this will be explicitly explained in the example below). Let's not talk about Monitor for now, because it's not that important right now.
+`entities_` set holds all entities that meet System's requirements. GetRequiredComponentTypes returns id's of components that are needed for entity to have functionality System provides. RegisterDependentSystems registers all Systems that are used inside this System (this will be explicitly explained in the example below). Let's omit Monitor for now, because it's not that important this moment.
 
 Similar to Entities and Components, Systems need their own manager that will keep track of registration and provide neede getters/setters:
 
