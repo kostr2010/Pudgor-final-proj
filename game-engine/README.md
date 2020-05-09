@@ -14,11 +14,11 @@ src-next - engine folder
 
 This implementation uses 3 main concepts labled in it's name: entity, component and system. I'll try to explain these concepts on the example below.
 
-## Explanation on gophers
+## Explanation using gophers as an example
 
 ### Component
 
-Let's try to create gopher. First thing we need to do is to work out, what this gopher needs to do in our world. In my world, gophers can only move around, grow and ocasionally die. Now let's list all of the data we need for this functionality to work. If we need our gopher to move, he needs to know his position and speed, in order to grow, he needs to know his current height and finally, we need to know gopher's current age and the maximum age average gopher can reach. Such data is called `Component`. Snippet below demonstrates possible implementation of them.
+Let's try to create gopher. First thing we need to do is to work out, what this gopher needs to do in our world. In my world, gophers can only move around, grow and ocasionally die. Now let's list all of the data we need for this functionality to work. If we need our gopher to move, he needs to know his position and speed, in order to grow, he needs to know his current height and finally, we need to know gopher's current age and the lifespan of an average gopher. Such data is called `Component`. Snippet below demonstrates possible implementation of them.
 
 ```C
 struct Vec2 {
@@ -42,11 +42,11 @@ struct ComponentSize {
 };
 ```
 
-Note: it's vital for the components to be POD, because they will be copied left and right (ideally, they should be in continuous packed array and be able to be copied using memcpy) and need to not lose integrity from this operations. It will become clear later, when other concepts will be introduced.
+Note: it's vital for the components to be POD, because they will be copied here and there (ideally, they should be in continuous packed array and be able to be copied using memcpy) and need to not lose integrity from this operations. It will become clear later, when other concepts will be introduced.
 
 ### Entity
 
-Now we need to somehow keep track of the components someone has. In this implementation, it's achieved like this: when introducing new component, it recieves an id. This approach allows us to represent an entity with just id and signature (bitset) that represents component it has. For example, let ComponentPosition's id be 0, ComponentSpeed's - 1, etc. Thus, each gopher would have sigature <1111> (bits in needed positions are set to 1), and each tree - <1011> (because trees can't move, but sure have position, height and age). In order to keep track of entities and their components, EntityManger and ComponentManager are created. Both of them share same functionality: register new entries, manade id's and instances, remove them. Below are snippets of EntityManager and ComponentManager declaration:
+Now we need to somehow keep track of the components someone has. In this implementation, it's achieved like this: when introducing new component, it recieves an id. This approach allows us to represent an entity with just id and signature (bitset) that represents components it has. For example, let ComponentPosition's id be 0, ComponentSpeed's - 1, etc. Thus, each gopher would have sigature <1111> (bits in required positions are set to 1), and each tree - <1011> (because trees can't move, but sure have position, height and age). In order to keep track of entities and their components, EntityManger and ComponentManager are created. Both of them share same functionality: register new entries, manage id's and instances, remove them. Below are snippets of EntityManager and ComponentManager declaration:
 
 ```C
 // ====================
@@ -77,7 +77,7 @@ private:
 };
 ```
 
-When entity is created, id from `avaliable_ids_` is taken and given to user (when entity is removed, this id is pushed back to the vector). Also, manager stores signatures for every entity in array `abilities_signatures_`, where index in array corresponds to entity's id. Now let's take a look at ComponentManager and how it manages all of the components each entity has.
+When entity is created, id from `avaliable_ids_` is taken and given to user. When entity is removed, this id is pushed back to the vector. Also, manager stores signatures for every entity in array `abilities_signatures_`, where array index corresponds to entity's id. Now let's take a look at ComponentManager and how it manages all of the components each entity has.
 
 ```C
 // ====================
@@ -120,7 +120,7 @@ private:
 };
 ```
 
-When new component is registered, it's assigned new id (mapping name-id is stored in `component_types_`). Next, new ComponentPack is created for this component. ComponentPack is class derived from IComponentPack that provides functionality every ComponentPack should have:
+When new component is registered, it's assigned a new id (mapping name-id is stored in `component_types_`). Next, new ComponentPack is created for this component. ComponentPack is class derived from IComponentPack that provides functionality every ComponentPack should have:
 
 ```C
 class IComponentPack {
@@ -208,7 +208,7 @@ Good. Now we need to do something we have planned from very beginning. We need t
 
 ### System
 
-Systems are designed to do exactly that. By definition, `System` is container for entities posessing some attribute/s that provides functionality to operate upon these entities. In other words, it's any functionality that iterates upon a list of entities with a certain signature of components. In this implementation, every `System` should be deriver from base-class `System` in order to work correctly. This class provides minimal requirements to meet definition of `System` given prior:
+Systems are designed to do exactly that. By definition, `System` is container for entities posessing some attribute/s that provides functionality to operate upon these entities. In other words, it's any functionality that iterates upon a list of entities with a certain signature of components. In this implementation, every `System` should be derived from base-class `System` in order to work correctly. This class provides minimal requirements to meet definition of `System` given prior:
 
 ```C
 class Monitor; // forward declaration of class that I will explain further. all that matters now is that it holds pointers for all managers we have
