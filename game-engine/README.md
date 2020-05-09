@@ -229,7 +229,7 @@ protected:
 };
 ```
 
-`entities_` set holds all entities that meet system's requirements. GetRequiredComponentTypes returns id's of components that are needed for entity to have functionality system provides. RegisterDependentSystems registers all systems that are used inside this system (this will be explicitly explained in the example below). Let's not talk about Monitor for now, because it's not that important right now.
+`entities_` set holds all entities that meet System's requirements. GetRequiredComponentTypes returns id's of components that are needed for entity to have functionality System provides. RegisterDependentSystems registers all Systems that are used inside this System (this will be explicitly explained in the example below). Let's not talk about Monitor for now, because it's not that important right now.
 
 Similar to Entities and Components, Systems need their own manager that will keep track of registration and provide neede getters/setters:
 
@@ -268,7 +268,7 @@ public:
 };
 ```
 
-When new system is registered, it's name is taken (from template via typeid) as id and then this system is stored in `systems_` map. Next, we set system's signature. It works same as with entity and its signature. In order to check if entity meets requirements, we need to do bitewise AND upon both entity's and system's signatures. And if `system_signature_ & entity_signature == system_signature`, then entity meets system's requirements. When system's sugnature is set/changed, SystemManager iterates upon every entity and checks if they meet new System's signature. Same goes when entity's signature changes (f.ex, our gopher becomes immortal, thus losing ComponentHealth): SystemManager goes through all systems and checks if new signature meets any of them (or stopped to meet).
+When new System is registered, it's name is taken (from template via typeid) as id and then this System is stored in `systems_` map. Next, we set System's signature. It works same as with entity and its signature. In order to check if entity meets requirements, we need to do bitewise AND upon both entity's and System's signatures. And if `system_signature_ & entity_signature == system_signature`, then entity meets System's requirements. When System's sugnature is set/changed, SystemManager iterates upon every entity and checks if they meet new System's signature. Same goes when entity's signature changes (f.ex, our gopher becomes immortal, thus losing ComponentHealth): SystemManager goes through all Systems and checks if new signature meets any of them (or stopped to meet).
 
 Let's write some examples:
 
@@ -304,7 +304,7 @@ Once again, Monitor is just holder for pointers to every one of the managers. Le
 
 ### Monitor (a.k.a GOD-CLASS)
 
-See this part: "monitor\_->man_c->RegisterComponent<ComponentHealth>()". It's unpleasant to white this sequrnce of arrows each time we need to get component (and we need it a lot). So we make Monitor not only holder for pointers to managers, but interface of working with them, duplicating needed functions as Monitor's methods:
+See this part: "monitor->man_c->RegisterComponent<ComponentHealth>()". It's unpleasant to white this sequrnce of arrows each time we need to get component (and we need it a lot). So we make Monitor not only holder for pointers to managers, but interface of working with them, duplicating needed functions as Monitor's methods:
 
 ```C
 // ====================
